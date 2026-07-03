@@ -1,0 +1,89 @@
+managed implementation in class zcl_bp_suraj_i_entityview unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZSURAJ_I_ENTITYVIEW //alias <alias_name>
+persistent table zsuraj_contact
+draft table zsuraj_contact_d
+lock master
+total etag Lastchangedat
+authorization master ( instance )
+//etag master Lastchangedat
+
+{
+  create ( authorization : global );
+  update(features : instance);
+  delete;
+  field ( readonly, numbering : managed ) ContactId;
+  association _Address { create; }
+
+  field( mandatory : create) FirstName ;
+  field ( readonly ) age;
+
+  field( features : instance ) FirstName, LastName;
+
+  validation validate_telephone on save { create; update; field Telephone; }
+  determination claculateAge on modify { field Dob ; }
+  determination setStatus on save { field FirstName , LastName , Dob , Email , Gender , Telephone ; }
+
+  side effects
+  {
+    field Dob affects field Age;
+  }
+
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action  Discard;
+  draft action Resume;
+  draft determine action Prepare
+  {
+  validation validate_telephone ;
+  }
+
+  mapping for zsuraj_contact{
+     Active = active;
+     ContactId = contact_id;
+     CreatedAt = created_at;
+     CreatedBy = created_by;
+     Dob = dob;
+     Age = age;
+     Email = email;
+     FirstName = first_name;
+     LastName = last_name;
+     Lastchangedat = lastchangedat;
+     Lastchangedby = lastchangedby;
+     Telephone = telephone;
+     Gender = gender;
+
+  }
+
+}
+
+define behavior for ZSURAJ_I_ADDR //alias <alias_name>
+persistent table zsuraj_address
+draft table zsuraj_address_d
+lock dependent by _Contact
+authorization dependent by _Contact
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly ) ContactId;
+  field (readonly , numbering : managed )  AddressId;
+  association _Contact { with draft; }
+
+  mapping for zsuraj_address{
+        Addr1 = addr1;
+        Addr2 = addr2;
+        AddressId = address_id;
+        City = city;
+        ContactId = contact_id;
+        CreatedAt = created_at;
+        CreatedBy = created_by;
+        LastChangedAt = last_changed_at;
+        LastChangedBy = last_changed_by;
+        State = state;
+      }
+
+}

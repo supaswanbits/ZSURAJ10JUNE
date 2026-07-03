@@ -1,0 +1,109 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo: {
+    typeName: 'Contact',
+    typeNamePlural: 'Contacts'
+}
+annotate entity ZSURAJ_C_ENTITYVIEW with
+{
+    @UI.facet: [{
+        id: 'Idfacet1',
+        purpose: #STANDARD,
+        position: 10,
+        label: 'Contact Details',
+        type: #IDENTIFICATION_REFERENCE
+    },
+     
+    { id: 'IdFacet2',
+      position: 20,
+      purpose: #STANDARD,
+      label: 'Address Details',
+      type: #LINEITEM_REFERENCE,
+      targetElement: '_Address'
+    }
+    
+    
+    ]
+
+
+  @UI.hidden: true
+  @UI.lineItem: [{ position: 10  }]
+  @UI.identification: [{ position: 10, label: 'Contact Id' }]
+ 
+  ContactId;
+  @UI.lineItem: [{ position: 20 , importance: #MEDIUM, emphasized: true, type: #WITH_URL }]
+  @UI.identification: [{ position: 20 , label: 'First Name' }]
+
+  FirstName;
+  @UI.lineItem: [{ position: 30 , emphasized: true }]
+  @UI.identification: [{ position: 30, label: 'Last Name'  }]
+
+  LastName;
+  @UI.lineItem: [{ position: 40 ,  importance: #LOW}]
+  @UI.identification: [{ position: 40, label: 'Gender'  }]
+  @Consumption.valueHelpDefinition: [{
+      entity: {
+          name: 'ZSURAJ_F4HELP_GENDER',
+          element: 'GenderCode'
+      },
+      distinctValues: true
+
+  }]
+
+  Gender;
+  @UI.lineItem: [{ position: 50 }]
+  @UI.identification: [{ position: 50, label: 'Date of Birth'  }]
+
+  Dob;
+  
+  @UI.lineItem: [{ position: 55, label: 'Age' }]
+  @UI.identification: [{ position: 55, label: 'Age'  }]
+
+  age;
+  
+  
+  @UI.lineItem: [{ position: 60 }]
+  @UI.identification: [{ position: 60, label: 'Mobile Number'  }]
+
+  Telephone;
+  @UI.lineItem: [{ position: 70 }]
+  @UI.identification: [{ position: 70, label: 'Email'  }]
+  @UI.fieldGroup: [{ position: 20, qualifier: 'ContactDetails' }]
+  Email;
+  @UI.lineItem: [{ position: 10 , criticality: 'MessageCriticality', criticalityRepresentation: #WITH_ICON }]
+  //    @UI.identification: [{ position: 10 , label: 'Message' }]
+   Message;
+  
+
+  @UI.lineItem: [{ position: 200 }]
+  @UI.identification: [{ position: 110, label: 'Status'  }]
+  Active;
+  
+
+  @UI.hidden: true
+  CreatedBy;
+  @UI.lineItem: [{ position: 100, importance: #LOW }]
+
+  CreatedAt;
+  @UI.lineItem: [{ position: 110, importance: #LOW }]
+ 
+  Lastchangedby;
+  @UI.lineItem: [{ position: 120 , importance: #LOW}]
+
+  Lastchangedat;
+  
+  @UI.lineItem: [{ 
+    position: 1,
+    type: #AS_DATAPOINT,
+    label: 'Profile Completion %',
+    criticality: 'progresscriticality'
+  }]
+  @UI.dataPoint: {
+    title: 'Profile Completion',
+    visualization: #PROGRESS,
+    targetValue: 100,
+    criticality: 'progresscriticality'
+
+  }
+  progress_bar;
+
+}

@@ -1,0 +1,7 @@
+@EndUserText.label: 'Service definition for contact'
+define service ZSURAJ_SD_CONTACT {
+  expose ZSURAJ_C_ENTITYVIEW;
+  expose ZSURAJ_I_ENTITYVIEW;
+  expose ZSURAJ_C_ADDR;
+  expose ZSURAJ_I_ADDR;
+}
